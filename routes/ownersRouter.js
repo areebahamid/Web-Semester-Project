@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const ownerModel = require("../models/owner-model");
+const {logoutOwner} = require('../controllers/ownerController');
 const bcrypt = require("bcrypt");
 
-console.log(process.env.NODE_ENV);
+//console.log(process.env.NODE_ENV);
 //command to set ENV  => set NODE_ENV=development
 if (process.env.NODE_ENV === "development") {
   router.post("/create", async (req, res) => {
@@ -30,9 +31,7 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
-router.get("/", (req, res) => {
-  //res.render("newProduct");
-  res.send("hy owneris working")
-});
+router.get("/logout",logoutOwner);
+
 
 module.exports = router;
