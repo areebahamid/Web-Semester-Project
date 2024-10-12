@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const {regiesterUser, loginUser, logout} = require('../controllers/userController');
+const {regiesterUser, loginUser} = require('../controllers/userController');
 
 
 router.get("/", (req, res)=>{
@@ -11,7 +11,7 @@ router.post("/register",regiesterUser);
 
 router.post("/auth", loginUser );
 
-router.get("/logout", logout)
+
 
 
 //// exporting

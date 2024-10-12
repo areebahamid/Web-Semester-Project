@@ -65,13 +65,9 @@ const loginUser = async (req, res) => {
   } catch (error) {}
 };
 
-const logout = (req, res)=>{
-  res.cookie("token","")
-  res.redirect("/")
-}
+
 
 module.exports = {
   regiesterUser,
-  loginUser,
-  logout,
+  loginUser
 };

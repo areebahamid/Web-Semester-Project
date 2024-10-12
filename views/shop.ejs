@@ -20,7 +20,7 @@
                 <a href="#" class="text-gray-700 hover:text-gray-900">Cart</a>
                 <a href="#" class="text-gray-700 hover:text-gray-900">My Account</a>
             </div>
-            <a href="#" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
+            <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
         </div>
 
         <div class="mt-5 h-1 bg-slate-800 w-full"></div>
@@ -28,53 +28,38 @@
         <div class="flex flex-row   mt-2 w-full min-h-screen bg-slate-300">
             <div class="flex-[20%] flex flex-col  p-4">
 
-                <a class="mb-4 text-slate-950" href="#">All products</a>
-                <a class="text-white" href="/newProduct">Create new products</a>
+                <a class="mb-4 text-white" href="#">All products</a>
+                <a class="text-gray-950 " href="/newProduct">Create new products</a>
             </div>
             <br>
             <div class="flex-[80%] flex flex-row space-x-3 flex-wrap
              p-2">
-                <div class="bg-slate-400 w-60 h-72 rounded-md overflow-hidden" >
-                    <img class="w-full h-52 object-center"
-                      src="https://www.pngmart.com/files/14/Blue-Duffel-Bag-Transparent-PNG.png" alt=""/>
-                     <div class="bg-slate-700 w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start"> 
-                        <h3 class="text-slate-900">Name</h3>
-                        <h3 class="text-slate-900">1200</h3>
-                     </div>
-                </div>
-                <div class="bg-slate-400 w-60 h-72 rounded-md overflow-hidden" >
-                    <img class="w-full h-52 object-center"
-                      src="https://www.pngmart.com/files/14/Blue-Duffel-Bag-Transparent-PNG.png" alt=""/>
-                     <div class="bg-slate-700 w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start"> 
-                        <h3 class="text-slate-900">Name</h3>
-                        <h3 class="text-slate-900">1200</h3>
-                     </div>
-                </div>
-                <div class="bg-slate-400 w-60 h-72 rounded-md overflow-hidden" >
-                    <img class="w-full h-52 object-center"
-                      src="https://www.pngmart.com/files/14/Blue-Duffel-Bag-Transparent-PNG.png" alt=""/>
-                     <div class="bg-slate-700 w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start"> 
-                        <h3 class="text-slate-900">Name</h3>
-                        <h3 class="text-slate-900">1200</h3>
-                     </div>
-                </div>
-                <div class="bg-slate-400 w-60 h-72 rounded-md overflow-hidden" >
-                    <img class="w-full h-52 object-center"
-                      src="https://www.pngmart.com/files/14/Blue-Duffel-Bag-Transparent-PNG.png" alt=""/>
-                     <div class="bg-slate-700 w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start"> 
-                        <h3 class="text-slate-900">Name</h3>
-                        <h3 class="text-slate-900">1200</h3>
-                     </div>
-                </div>
-                <div class="bg-slate-400 w-60 h-72 rounded-md overflow-hidden" >
-                    <img class="w-full h-52 object-center"
-                      src="https://www.pngmart.com/files/14/Blue-Duffel-Bag-Transparent-PNG.png" alt=""/>
-                     <div class="bg-slate-700 w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start"> 
-                        <h3 class="text-slate-900">Name</h3>
-                        <h3 class="text-slate-900">1200</h3>
-                     </div>
-                </div>
-                
+                <% products.forEach((product)=>{ %>
+                    <div class=" w-60 h-72 rounded-md overflow-hidden transition-transform duration-300 ease-in-out  hover:scale-105 ">
+                        <img class="w-full h-52 object-center object-cover "
+                            src="data:image/jepg;base64,<%=product.image.toString('base64') %>"
+                            alt="<%= product.name %>" />
+                            <div
+                            class="bg-[<%= product.panelcolor %>] text-[<%= product.textcolor %>] w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start">
+                            <div class="flex flex-row">
+                            <h3 class="text-2xl">
+                              <%= product.name %>
+                            </h3>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                              <!-- Price -->
+                              <h3 class="text-2xl">$<%= product.price %></h3>
+                              
+                              <!-- Discount -->
+                              <% if (product.discount > 0) { %>
+                                <h3 class="text-red-500 text-xl line-through">$<%= (product.price - product.discount).toFixed(2) %></h3>
+                                <h3 class=" text-xl">$<%= product.discount %> off</h3>
+                              <% } %>
+                            </div>
+                          </div>
+                          
+                    </div>
+                    <% }) %>
             </div>
         </div>
     </div>
