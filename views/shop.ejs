@@ -9,6 +9,13 @@
 </head>
 
 <body class="bg-gray-100">
+    <% if(success.length> 0){ %>
+        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= success %>
+            </span>
+        </div>
+        <%}%>
     <!-- Navbar -->
     <div class="w-full h-screen p-5">
         <!-- Flex container to align both Shop and links horizontally -->
@@ -17,7 +24,7 @@
             <div class="space-x-4 mr-4">
                 <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
                 <a href="#" class="text-gray-700 hover:text-gray-900">Products</a>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Cart</a>
+                <a href="/cart" class="text-gray-700 hover:text-gray-900">Cart</a>
                 <a href="#" class="text-gray-700 hover:text-gray-900">My Account</a>
             </div>
             <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
@@ -39,12 +46,16 @@
                         <img class="w-full h-52 object-center object-cover "
                             src="data:image/jepg;base64,<%=product.image.toString('base64') %>"
                             alt="<%= product.name %>" />
+
                             <div
                             class="bg-[<%= product.panelcolor %>] text-[<%= product.textcolor %>] w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start">
-                            <div class="flex flex-row">
-                            <h3 class="text-2xl">
-                              <%= product.name %>
-                            </h3>
+                            <div class="">
+                            <div class="text-2xl tracking-tighter flex flex-row items-center justify-between ">
+                              <ul class="mr-2"><%= product.name %></ul>
+                              <a class="cursor-pointer transition-transform hover:scale-110 shadow-xl" href="/addToCart/<%=product.id%>">
+                              <img class="h-8 w-8 rounded-md" src="https://cdn-icons-png.flaticon.com/512/5163/5163709.png" alt="Add to Cart">
+                              </a>
+                            </div>
                             </div>
                             <div class="flex items-center space-x-2">
                               <!-- Price -->
