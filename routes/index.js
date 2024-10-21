@@ -1,8 +1,11 @@
 const express = require('express');
 const router  = express.Router();
 const isloggedIn = require("../middleware/isLoggedin");
+const isLoggedinOwner = require("../middleware/isLoggedinOwner")
 const productModel = require('../models/product-model');
 const userModel = require('../models/user-model');
+const isloggedInOwner = require('../middleware/isLoggedinOwner');
+
 
 router.get("/", (req, res)=>{
     let error = req.flash("error");
@@ -13,10 +16,15 @@ router.get("/login", (req,res)=>{
     res.render("login")
 });
 
+router.get("/owners/login", (req,res)=>{
+    res.render("loginOwner")
+});
+
 router.get("/logout",(req, res)=>{
     res.cookie("token","")
     res.redirect("/")
 });
+
 
 router.get("/shop",isloggedIn,async(req, res)=>{
     try {
@@ -35,7 +43,25 @@ router.get("/shop",isloggedIn,async(req, res)=>{
     }
 });
 
-router.get("/newProduct",isloggedIn ,(req, res) => {
+router.get("/owners/shop",isloggedInOwner,async(req, res)=>{
+    try {
+        let products = await productModel.find()
+    if(products){
+        // if (products.image) {
+        //     // Convert the image buffer to base64
+        //     const imageBase64 = products.image.toString('base64');
+        //     products.image = `data:image/jpeg;base64,${imageBase64}`; // You can also change the MIME type to match your image format
+        //   }
+        let success= req.flash("success")
+    res.render("shopOwner", {products,success})
+    }
+    } catch (error) {
+        console.log(error.message)
+    }
+});
+
+
+router.get("/newProduct",isLoggedinOwner ,(req, res) => {
     let success = req.flash("success")
     let error = req.flash("error");
     res.render("newProduct" , {success,error})

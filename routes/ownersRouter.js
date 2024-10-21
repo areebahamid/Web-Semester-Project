@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ownerModel = require("../models/owner-model");
-const {logoutOwner} = require('../controllers/ownerController');
+const {logoutOwner,loginOwner} = require('../controllers/ownerController');
 const bcrypt = require("bcrypt");
 
 //console.log(process.env.NODE_ENV);
@@ -33,5 +33,6 @@ if (process.env.NODE_ENV === "development") {
 
 router.get("/logout",logoutOwner);
 
+router.post("/auth",loginOwner);
 
 module.exports = router;

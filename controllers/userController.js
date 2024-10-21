@@ -1,6 +1,6 @@
 const userModel = require("../models/user-model");
 const bcrypt = require("bcrypt");
-const generateToken = require("../utils/jsonWebToken");
+const {generateToken} = require("../utils/jsonWebToken");
 
 const regiesterUser = async (req, res) => {
   try {
