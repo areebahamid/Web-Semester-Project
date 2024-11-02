@@ -35,7 +35,7 @@ router.get("/shop",isloggedIn,async(req, res)=>{
         //     const imageBase64 = products.image.toString('base64');
         //     products.image = `data:image/jpeg;base64,${imageBase64}`; // You can also change the MIME type to match your image format
         //   }
-        let success= req.flash("success")
+    let success= req.flash("success")
     res.render("shop", {products,success})
     }
     } catch (error) {
@@ -86,7 +86,8 @@ router.get("/addToCart/:productid",isloggedIn,async(req,res)=>{
 router.get("/cart",isloggedIn,async(req,res)=>{
     let user = await userModel.findOne({email: req.user.email}).populate("cart")
     // console.log(user.cart)
-    res.render("cart",{user})
+    let success = req.flash("success")
+    res.render("cart",{user,success})
 })
 
 module.exports = router;

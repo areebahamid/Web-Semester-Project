@@ -65,9 +65,29 @@ const loginUser = async (req, res) => {
   } catch (error) {}
 };
 
+const removeItemFromList = async (req, res)=>{
+  // console.log("cart id : "+ req.params.cartItemid)
+  let item = req.params.cartItemid
+  try {
+    let user = await userModel.findOne({email: req.user.email})
+    if(!user){return res.status(500).redirect('/')}
+    // console.log(user.fullName)
+    user.cart.pull({ _id: item });
+    await user.save();
+    req.flash("success" , "Removed from Cart")
+    res.status(200)
+    .redirect("/cart");
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while removing the item.");
+  }
+};
+
 
 
 module.exports = {
   regiesterUser,
-  loginUser
+  loginUser,
+  removeItemFromList,
 };

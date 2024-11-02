@@ -10,7 +10,7 @@
 
 <body>
     <% if(error.length> 0){ %>
-        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+        <div id="error-alert" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
             <span class="inline-block mt-1 mb-1 text-white">
                 <%= error %>
             </span>
@@ -36,5 +36,16 @@
 
             </div>
 </body>
+<script>
+    // Set timeout to hide the alerts after 2 seconds
+    setTimeout(() => {
+        const errorAlert = document.getElementById('error-alert');
+
+        if (errorAlert) {
+            errorAlert.classList.add('opacity-0'); // fade out
+            setTimeout(() => errorAlert.style.display = 'none', 500); // hide after transition
+        }
+    }, 2000); // Display duration (2 seconds)
+</script>
 
 </html>

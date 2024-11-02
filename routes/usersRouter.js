@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
-const {regiesterUser, loginUser} = require('../controllers/userController');
+const {regiesterUser, loginUser,removeItemFromList} = require('../controllers/userController');
+const isLoggedin = require('../middleware/isLoggedin')
 
 
 router.get("/", (req, res)=>{
@@ -10,6 +11,8 @@ router.get("/", (req, res)=>{
 router.post("/register",regiesterUser);
 
 router.post("/auth", loginUser );
+
+router.get("/removeitem/:cartItemid",isLoggedin,removeItemFromList )
 
 
 
