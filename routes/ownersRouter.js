@@ -35,4 +35,6 @@ router.get("/logout",logoutOwner);
 
 router.post("/auth",loginOwner);
 
+
+
 module.exports = router;

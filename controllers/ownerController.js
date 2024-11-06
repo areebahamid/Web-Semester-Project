@@ -36,4 +36,5 @@ const loginOwner = async(req,res)=>{
   }
 };
 
+
 module.exports = {logoutOwner,loginOwner};

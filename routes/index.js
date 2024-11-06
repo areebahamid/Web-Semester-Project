@@ -4,6 +4,7 @@ const isloggedIn = require("../middleware/isLoggedin");
 const isLoggedinOwner = require("../middleware/isLoggedinOwner")
 const productModel = require('../models/product-model');
 const userModel = require('../models/user-model');
+const orderModel = require('../models/order-model')
 const isloggedInOwner = require('../middleware/isLoggedinOwner');
 
 
@@ -90,4 +91,15 @@ router.get("/cart",isloggedIn,async(req,res)=>{
     res.render("cart",{user,success})
 })
 
+
+router.get("/orderslist",isloggedIn, async(req, res)=>{
+    try {
+        console.log(req.user._id);
+        let orders = await orderModel.find({ userId: req.user._id });
+        res.render("orders", { orders: orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error fetching orders");
+    }
+})
 module.exports = router;

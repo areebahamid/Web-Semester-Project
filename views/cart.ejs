@@ -1,112 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
     <% if(success.length> 0){ %>
-        <div id="success-alert" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500 opacity-100 transition duration-500 ease-in-out ">
+        <div id="success-alert"
+            class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500 opacity-100 transition duration-500 ease-in-out">
             <span class="inline-block mt-1 mb-1 text-white">
                 <%= success %>
             </span>
         </div>
         <%}%>
-    <div class="w-full h-screen p-5">
-    <div class="flex items-center justify-between">
-        <a href="#" class="text-4xl font-bold text-gray-900">Shop</a>
-        <div class="space-x-4 mr-4">
-            <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
-            <a href="/shop" class="text-gray-700 hover:text-gray-900">Products</a>
-            <a href="/cart" class="text-gray-700 hover:text-gray-900">Cart</a>
-            <a href="#" class="text-gray-700 hover:text-gray-900">My Account</a>
-        </div>
-        <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
-    </div>
-
-    <div class="mt-5 h-1 bg-slate-800 w-full"></div>
-    
-    <h1 class="text-2xl m-2 font-semibold flex justify-center items-center">Cart Details</h1>
-
-    <% user.cart.forEach((cartItem) => { %>
-        <div class="flex items-start px-20 py-8 gap-10 ">
-            <div class="w-[30%] rounded-md overflow-hidden">
-                <div class="w-full h-72 bg-[#222] border-t-4 border-x-2 border-[<%= cartItem.bgcolor%>]  overflow-hidden ">
-                    <!-- Display product image -->
-                    <img class="w-full h-full object-cover " src="data:image/jpeg;base64,<%= cartItem.image.toString('base64') %>" alt="<%= cartItem.name %>" /> 
-                </div>
-                <div class="w-full flex justify-between px-5 py-4 bg-[<%= cartItem.panelcolor%>]">
-                    <!-- Display product name -->
-                    <h3 class="text-2xl"><%= cartItem.name %></h3>
-                    <div class="flex items-center gap-2 cursor-pointer transition-transform duration-150 ease-in-out hover:scale-110">
-                        <!-- Increment/Decrement buttons -->
-                        <!-- <i class="w-7 h-7 bg-white flex rounded-full justify-center p-2 items-center font-semibold ri-add-line">+</i> -->
-                        <!-- <div class="px-2 py-1 rounded-md bg-white text-black">01</div> -->
-                        <a href="/users/removeitem/<%=cartItem.id%>">
-                        <i class="w-9 h-9 bg-white flex rounded-full items-center p-2 justify-center font-semibold ri-subtract-line">
-                            <img class="w-full h-full rounded-md" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPg7BltbgxKtbCVCiJdmd6NFYpvtr7VX_-wA&s" alt="">
-                        </i>
-                        </a>
+            <div class="w-full h-screen p-5">
+                <div class="flex items-center justify-between">
+                    <a href="#" class="text-4xl font-bold text-gray-900">Shop</a>
+                    <div class="space-x-4 mr-4">
+                        <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+                        <a href="/shop" class="text-gray-700 hover:text-gray-900">Products</a>
+                        <a href="/cart" class="text-gray-700 hover:text-gray-900">Cart</a>
+                        <a href="#" class="text-gray-700 hover:text-gray-900">My Account</a>
+                        <a href="/orderslist" class="text-gray-700 hover:text-gray-900">My orders</a>
                     </div>
+                    <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
                 </div>
-                <div class="flex items-center justify-between px-5 py-3 bg-[<%= cartItem.bgcolor%>]">
-                    <!-- Display product price -->
-                    <h4 class="text-lg">Item Price</h4>
-                    <h2 class="text-lg">$ <%= cartItem.price %></h2>
-                </div>
+
+                <div class="mt-5 h-1 bg-slate-800 w-full"></div>
+
+                <% if(user.cart.length == 0){ %>
+                    <h1 class="text-2xl m-2 font-semibold flex justify-center items-center">
+                        No value added in cart
+                    </h1>
+                    <% }else{ %>
+
+                            <h1 class="text-2xl m-2 font-semibold flex justify-center items-center">
+                                Cart Details
+                            </h1>
+
+                            <% user.cart.forEach((cartItem)=> { %>
+                                <div class="flex items-start px-20 py-8 gap-10">
+                                    <div class="w-[30%] rounded-md overflow-hidden">
+                                        <div
+                                            class="w-full h-72 bg-[#222] border-t-4 border-x-2 border-[<%= cartItem.bgcolor%>] overflow-hidden">
+                                            <!-- Display product image -->
+                                            <img class="w-full h-full object-cover"
+                                                src="data:image/jpeg;base64,<%= cartItem.image.toString('base64') %>"
+                                                alt="<%= cartItem.name %>" />
+                                        </div>
+                                        <div
+                                            class="w-full flex justify-between px-5 py-4 bg-[<%= cartItem.panelcolor%>]">
+                                            <!-- Display product name -->
+                                            <h3 class="text-2xl">
+                                                <%= cartItem.name %>
+                                            </h3>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer transition-transform duration-150 ease-in-out hover:scale-110">
+                                                <!-- Increment/Decrement buttons -->
+                                                <!-- <i class="w-7 h-7 bg-white flex rounded-full justify-center p-2 items-center font-semibold ri-add-line">+</i> -->
+                                                <!-- <div class="px-2 py-1 rounded-md bg-white text-black">01</div> -->
+                                                <a href="/users/removeitem/<%=cartItem.id%>">
+                                                    <i
+                                                        class="w-9 h-9 bg-white flex rounded-full items-center p-2 justify-center font-semibold ri-subtract-line">
+                                                        <img class="w-full h-full rounded-md"
+                                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPg7BltbgxKtbCVCiJdmd6NFYpvtr7VX_-wA&s"
+                                                            alt="" />
+                                                    </i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between px-5 py-3 bg-[<%= cartItem.bgcolor%>]">
+                                            <!-- Display product price -->
+                                            <h4 class="text-lg">Item Price</h4>
+                                            <h2 class="text-lg">$ <%= cartItem.price %>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div class="w-[70%]">
+                                        <h3 class="text-xl">Price Breakdown</h3>
+                                        <div class="px-10 mt-5">
+                                            <div class="flex mt-2 tracking-tighter">
+                                                <h4 class="w-1/3">Item Price</h4>
+                                                <h4>$<%= cartItem.price %>
+                                                </h4>
+                                            </div>
+                                            <div class="flex mt-2">
+                                                <h4 class="w-1/3">Item Discount</h4>
+                                                <h4>$<%= cartItem.discount %>
+                                                </h4>
+                                            </div>
+                                            <div class="flex mt-2">
+                                                <h4 class="w-1/3">Platform Fee</h4>
+                                                <h4>$ 0</h4>
+                                            </div>
+                                            <div class="flex mt-2">
+                                                <h4 class="w-1/3">shipping Fee</h4>
+                                                <h4>$ 0</h4>
+                                            </div>
+                                            <div class="mt-5 h-0.5 bg-zinc-600 w-full"></div>
+                                            <div class="flex mt-2">
+                                                <h4 class="w-1/3">Total price</h4>
+                                                <h4>$ <%=cartItem.price- cartItem.discount %></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+
+                                    <div class="w-full flex justify-end">
+                                        <a href="/orders/placeOrder/<%=user.id%>"
+                                            class="bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-900 text-white rounded-md px-4 py-2">
+                                            Place Order
+                                        </a>
+                                    </div>
+
+                                    <div class="mt-5 h-0.5 bg-zinc-600 w-full"></div>
+                                    <div class="flex mt-3 h-1/2 w-full justify-center">
+                                        <h2 class="text-2xl font-semibold">Net Total</h2>
+                                        <%let price=0%>
+                                            <% user.cart.forEach((items)=>{ %> <% price +=(
+                                                    Number(items.price)-Number(items.discount)) %>
+                                                    <% }) %>
+                                                        <h2 class="text-2xl ml-10 font-semibold">$<%= price %>
+                                                        </h2>
+                                    </div>
+                                    <% } %>
             </div>
-            <div class="w-[70%]">
-                <h3 class="text-xl">Price Breakdown</h3>
-                <div class="px-10 mt-5">
-                    <div class="flex mt-2  tracking-tighter">
-                        <h4 class="w-1/3">Item Price</h4>
-                        <h4>$<%= cartItem.price %></h4>
-                    </div>
-                    <div class="flex mt-2 ">
-                        <h4 class="w-1/3">Item Discount</h4>
-                        <h4>$<%= cartItem.discount %></h4>
-                    </div>
-                    <div class="flex mt-2 ">
-                        <h4 class="w-1/3">Platform Fee</h4>
-                        <h4>$ 0</h4>
-                    </div>
-                    <div class="flex mt-2 ">
-                        <h4 class="w-1/3">shipping Fee</h4>
-                        <h4>$ 0</h4>
-                    </div>
-                    <div class="mt-5 h-0.5 bg-zinc-600 w-full"></div>
-                    <div class="flex mt-2 ">
-                        <h4 class="w-1/3">Total price</h4>
-                        <h4>$ <%=cartItem.price- cartItem.discount %></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% }) %>
-
-    <div class="mt-5 h-0.5 bg-zinc-600 w-full "></div>
-    <div class="flex mt-3 h-1/2 w-full justify-center"> 
-        <h2 class="text-2xl font-semibold">Net Total</h2>
-        <%let price=0%>
-        <% user.cart.forEach((items)=>{ %>
-            <% price += ( Number(items.price)-Number(items.discount)) %>
-            <% }) %>
-        <h2 class="text-2xl ml-10 font-semibold">$<%= price %></h2>
-        
-    </div>
-</div>
 </body>
 <script>
     // Set timeout to hide the alerts after 2 seconds
     setTimeout(() => {
-        const successAlert = document.getElementById('success-alert');
+        const successAlert = document.getElementById("success-alert");
         // const errorAlert = document.getElementById('error-alert');
 
         if (successAlert) {
-            successAlert.classList.add('opacity-0'); // fade out
-            setTimeout(() => successAlert.style.display = 'none', 500); // hide after transition
+            successAlert.classList.add("opacity-0"); // fade out
+            setTimeout(() => (successAlert.style.display = "none"), 500); // hide after transition
         }
         // if (errorAlert) {
         //     errorAlert.classList.add('opacity-0'); // fade out
@@ -114,4 +148,5 @@
         // }
     }, 1000); // Display duration (2 seconds)
 </script>
+
 </html>

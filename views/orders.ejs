@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="w-full h-screen p-5">
+        <div class="flex items-center justify-between">
+            <a href="#" class="text-4xl font-bold text-gray-900">Shop</a>
+            <div class="space-x-4 mr-4">
+                <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+                <a href="/shop" class="text-gray-700 hover:text-gray-900">Products</a>
+                <a href="/cart" class="text-gray-700 hover:text-gray-900">Cart</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900">My Account</a>
+                <a href="/orderslist" class="text-gray-700 hover:text-gray-900">My orders</a>
+            </div>
+            <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
+        </div>
+
+        <div class="mt-5 h-1 bg-slate-800 w-full mb-2"></div>
+        <div class="w-full h-screen ">
+            <% orders.forEach(order=>{ %>
+            <div class="bg-[<%= order.items[0].panelcolor %>] text-[<%= order.items[0].textcolor %>] w-full h-1/4 rounded-md p-1 flex flex-row mb-2 ">
+                <% order.items.forEach(item => { %>
+                    <% let price = 0 %>
+                    <!-- Display image for each item -->
+                    <img class="h-full rounded-md p-1 flex-shrink" 
+                         src="data:image/jpeg;base64,<%= item.image.toString('base64') %>" 
+                         alt="Product Image">
+                <% }); %>
+                <!-- <img class="h-full rounded-sm" src="data:image/jpeg;base64,<%= order.items[0].image.toString('base64') %>" alt="Product Image"> -->
+                <div class="flex flex-col flex-shrink-0">
+                    <h2 class="ml-4 font-semibold text-xl">Order ID: <%= order.id %></h2>
+                    <!-- <h2 class="ml-4 font-semibold ">:  <%= order.name %> </h2> -->
+                    <h2 class="ml-4 font-semibold">Ordering Date: <%= order.orderDate %></h2>
+                    <h2 class="ml-4 font-semibold">Order items: <% order.items.forEach(item =>{ %>
+                        <%= item.name %>
+                   <% }) %> </h2>
+                   <h2 class="ml-4 font-semibold">Order Cost Payed:
+
+                    <% 
+                    let price = 0;  // Initialize price variable
+                    order.items.forEach(item => { 
+                        price += (item.price - item.discount); // Add price minus discount
+                    }); 
+                    %>
+                    <%= price %>
+                    
+                </h2>
+
+                </div>
+                <div class="ml-auto flex items-center">
+                    <h2 class="font-semibold bg-[<%= order.items[0].bgcolor %>] h-1/2 rounded-md p-5 shadow-lg">Order Status: <%= order.status %></h2>
+                </div>
+            </div>
+
+            <% }) %>
+
+            <!-- <div class="bg-green-600 w-full h-1/4 rounded-md p-1 flex flex-row mb-2">
+                <img class="h-full rounded-sm" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYpX_uqVEs4pPpOuIrG-YBCls9jpRPIdemOA&s" alt="">
+                <div class="flex flex-col ">
+                    <h2 class="ml-4 font-semibold text-xl">Order ID: </h2>
+                    <h2 class="ml-4 font-semibold ">Order Name: </h2>
+                    <h2 class="ml-4 font-semibold">Ordering Date: </h2>
+                    <h2 class="ml-4 font-semibold">Order items: </h2>
+                </div>
+                <div class="ml-auto flex items-center">
+                    <h2 class="font-semibold bg-yellow-500 h-1/2 rounded-md p-5 shadow-lg">Order Status: pending</h2>
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+</body>
+</html>
