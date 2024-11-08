@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const productModel = require("../models/product-model");
 
 const createProduct = async (req, res) => {
@@ -28,4 +29,21 @@ const createProduct = async (req, res) => {
   }
 };
 
-module.exports = { createProduct };
+const deleteProduct = async(req,res) =>{
+  console.log(req.params.productId);
+  try {
+    let product = await productModel.findByIdAndDelete(req.params.productId)
+    if(product){
+      console.log("Deleted product:", product);
+      res.status(200).redirect("/owners/shop")
+    }else{
+      console.log("Product not found");
+      res.status(404).send("Product not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Unable to delete product or product doesn't exist")
+  }
+}
+
+module.exports = { createProduct, deleteProduct };

@@ -94,12 +94,16 @@ router.get("/cart",isloggedIn,async(req,res)=>{
 
 router.get("/orderslist",isloggedIn, async(req, res)=>{
     try {
-        console.log(req.user._id);
+        // console.log(req.user._id);
         let orders = await orderModel.find({ userId: req.user._id });
         res.render("orders", { orders: orders });
     } catch (error) {
         console.error(error);
         res.status(500).send("Error fetching orders");
     }
+})
+
+router.get("/myAccount",async(req,res)=>{
+    res.render("myAccount")
 })
 module.exports = router;
