@@ -1,4 +1,3 @@
-const { default: mongoose } = require("mongoose");
 const productModel = require("../models/product-model");
 
 const createProduct = async (req, res) => {
@@ -45,5 +44,6 @@ const deleteProduct = async(req,res) =>{
     res.status(500).send("Unable to delete product or product doesn't exist")
   }
 }
+
 
 module.exports = { createProduct, deleteProduct };

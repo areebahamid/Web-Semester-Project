@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const {placeOrder} = require('../controllers/orderController') 
+const {placeOrder, changeOrderStatus} = require('../controllers/orderController') 
 const isLoggedin = require('../middleware/isLoggedin')
 
 router.get("/", (req, res)=>{
@@ -8,6 +8,8 @@ router.get("/", (req, res)=>{
 });
 
 router.get("/placeOrder/:userid",isLoggedin,placeOrder);
+
+router.get("/update/:orderId",changeOrderStatus)
 
 
 module.exports = router;

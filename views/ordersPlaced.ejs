@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="w-full h-screen p-5">
+        <!-- Flex container to align both Shop and links horizontally -->
+        <div class="flex items-center justify-between">
+            <a href="#" class="text-4xl font-bold text-gray-900">Shop</a>
+            <div class="space-x-4 mr-4">
+                <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+                <a href="/owners/shop" class="text-gray-700 hover:text-gray-900">Products</a>
+                <!-- <a href="#" class="text-gray-700 hover:text-gray-900">Cart</a> -->
+                <a href="#" class="text-gray-700 hover:text-gray-900">My Account</a>
+                <!-- <a href="#" class="text-gray-700 hover:text-gray-900">Orders</a> -->
+            </div>
+            <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
+        </div>
+
+        <div class="mt-5 h-1 bg-slate-800 w-full"></div>
+
+        <div class="w-full h-screen ">
+            <% details.reverse().forEach(order=>{ %>
+            <div class="bg-[<%= order.items[0].panelcolor %>] text-[<%= order.items[0].textcolor %>] w-full h-1/6 rounded-md p-1 flex flex-row mt-1 mb-2">
+
+                <img class="h-full rounded-sm" src="data:image/jpeg;base64,<%= order.items[0].image.toString('base64') %>" alt="">
+                <div class="flex flex-col ">
+                    <h2 class="ml-4 font-semibold text-xl">Order ID: <%= order._id %> </h2>
+                    <!-- <h2 class="ml-4 font-semibold ">Order Name: <%=  %></h2> -->
+                    <h2 class="ml-4 font-semibold tracking-tighter">Ordering Date: <%= new Date(order.orderDate).toLocaleString("en-US", {
+                        weekday: "short", 
+                        year: "numeric", 
+                        month: "short", 
+                        day: "numeric", 
+                        hour: "2-digit", 
+                        minute: "2-digit"
+                    }) %> </h2>
+                    <h2 class="ml-4 font-semibold">Order items: <% order.items.forEach((item) => {  %>
+                        <%=item.name%> 
+                    <% }) %>  </h2>
+                </div>
+                <div class=" ml-4 flex flex-col ">
+                    <h2 class="ml-4 font-semibold text-xl" >user Name: <%= order.userName %></h2>
+                    <h2 class="ml-4 font-semibold text-xl" >user Contact: <%= order.user.contact %> </h2>
+                    <h2 class="ml-4 font-semibold text-xl" >user Email: <%= order.user.email %> </h2>
+                </div>
+            
+                <div class="ml-auto flex items-center">
+                    <button onclick="confirmation('<%= order._id %>', '<%= order.status %>')">
+                        <h2 class="font-semibold bg-[<%= order.items[0].bgcolor %>] h-1/2 rounded-md p-5 shadow-lg">
+                            Order Status: <%= order.status %></h2>
+                    </button>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+</body>
+
+<script>
+    const confirmation=(orderId,orderStatus)=>{
+        // console.log("Order ID:", orderId);
+        if(confirm(`Are you sure you want to change the status ${orderStatus} of order to next state ?`)){
+            window.location.href = `/orders/update/${orderId}`
+            
+        }
+    }
+</script>
+</html>

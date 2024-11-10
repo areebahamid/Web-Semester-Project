@@ -103,6 +103,26 @@ router.get("/orderslist",isloggedIn, async(req, res)=>{
     }
 })
 
+router.get("/owners/ordersPlaced",async(req, res)=>{
+    try {
+        let orders = await orderModel.find({})
+        if(orders){
+            // console.log(orders[0].userId)
+            let details =await Promise.all(await orders.map(async (order)=> {
+                
+                let user =  await userModel.findOne({_id: order.userId},
+                {userName: 1, email: 1, contact: 1})
+                return {...order.toObject(),user}
+            }) )
+            // console.log(details)
+            res.render("ordersPlaced",{details})
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error fetching orders");
+    }
+})
+
 router.get("/myAccount",async(req,res)=>{
     res.render("myAccount")
 })

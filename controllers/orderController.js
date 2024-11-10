@@ -58,6 +58,33 @@ const placeOrder = async (req, res) => {
   }
 };
 
+const changeOrderStatus = async(req, res)=>{
+  // console.log(req.params.orderId)
+  try {
+    let order = await orderModel.findOne({_id: req.params.orderId})
+    if(order){
+      if(order.status === "pending"){
+        order.status = "shipped"
+      }
+      else if(order.status === "shipped"){
+        order.status = "delivered"
+      }
+      else if(order.status === "delivered"){
+        return res.status(400).send("the status is already delivered")
+      }
+
+      await order.save()
+      res.redirect("/owners/ordersPlaced")
+    }else{
+      res.status(404).send("could do the job try again later")
+    }
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    res.status(500).send("An error occurred while updating the order status. Please try again later.");
+  }
+}
+
 module.exports = {
   placeOrder,
+  changeOrderStatus
 };
