@@ -123,7 +123,19 @@ router.get("/owners/ordersPlaced",async(req, res)=>{
     }
 })
 
-router.get("/myAccount",async(req,res)=>{
-    res.render("myAccount")
-})
+router.get("/myAccount", isloggedIn, async (req, res) => {
+    // console.log(req.user.id);
+    try {
+        let user = await userModel.findOne({ _id: req.user.id });
+        if (user) {
+            res.render("myAccount", { user });
+        } else {
+            res.status(404).send("User not found");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error fetching user");
+    }
+});
+
 module.exports = router;

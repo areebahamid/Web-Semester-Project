@@ -1,6 +1,8 @@
 const userModel = require("../models/user-model");
 const bcrypt = require("bcrypt");
 const {generateToken} = require("../utils/jsonWebToken");
+const {cloudinary} = require("../config/cloudinary-config")
+const { Readable } = require("stream");
 
 const regiesterUser = async (req, res) => {
   try {
@@ -85,9 +87,95 @@ const removeItemFromList = async (req, res)=>{
 };
 
 
+const bufferToStream = (buffer) => {
+  const readable = new Readable();
+  readable.push(buffer);
+  readable.push(null); // Signal the end of the stream
+  return readable;
+};
+
+const changeProfilePicture = async (req, res) => {
+  try {
+    // Check if file is uploaded
+    if (!req.file) {
+      req.flash("error", "No file uploaded");
+      return res.redirect("/myAccount");
+    }
+
+    // Log Cloudinary configuration to debug issues
+    console.log("Cloudinary Config:", cloudinary.config());
+
+    // Function to upload buffer to Cloudinary
+    const uploadToCloudinary = (buffer) =>
+      new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { folder: "profile_pictures" }, // Optional folder in Cloudinary
+          (error, result) => {
+            if (result) resolve(result); // Resolve promise if upload is successful
+            else reject(error); // Reject promise if upload fails
+          }
+        );
+
+        // Pipe the buffer as a stream to Cloudinary
+        bufferToStream(buffer).pipe(uploadStream);
+      });
+
+    // Upload file buffer to Cloudinary
+    const result = await uploadToCloudinary(req.file.buffer);
+
+    // Success
+    req.flash("success", "Profile picture updated successfully!");
+    res.redirect("/myAccount");
+  } catch (error) {
+    // Log error details for debugging
+    console.error("Error uploading file:", error);
+
+    // Flash error message and redirect
+    req.flash("error", "Something went wrong while uploading the image");
+    res.redirect("/myAccount");
+  }
+};
+
+// const changeProfilePicture = async (req, res)=>{
+//   try {
+//     if (!req.file) {
+//       req.flash("error", "No file uploaded");
+//       return res.redirect("/myAccount");
+//     }
+//     console.log(cloudinary.config());
+
+//     const uploadToCloudinary = (buffer) =>
+//       new Promise((resolve, reject) => {
+//         const uploadStream = cloudinary.uploader.upload_stream(
+//           { folder: "profile_pictures" }, // Optional: specify the folder in Cloudinary for organizing files
+//           (error, result) => {
+//             if (result) resolve(result); // Resolve the promise with the Cloudinary response if upload is successful
+//             else reject(error); // Reject the promise with an error if something goes wrong
+//           }
+//         );
+    
+//         // Convert buffer to stream and pipe it to Cloudinary
+//         bufferToStream(buffer).pipe(uploadStream);
+//       });
+
+//       const result = await uploadToCloudinary(req.file.buffer);
+//       if(result){
+//       req.flash("success", "Profile picture updated successfully!");
+//       res.redirect("/myAccount");
+//       }
+
+//   } catch (error) {
+//     console.error("Error uploading file:", error);
+//     req.flash("error", "Something went wrong while uploading the image");
+//     res.redirect("/myAccount");
+//   }
+// };
+
+
 
 module.exports = {
   regiesterUser,
   loginUser,
   removeItemFromList,
+  changeProfilePicture,
 };

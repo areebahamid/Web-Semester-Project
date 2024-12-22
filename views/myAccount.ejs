@@ -6,36 +6,48 @@
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100">
+
     <!-- Navbar -->
-    <div class="w-full h-screen p-5">
+    <div class="w-full bg-white p-5 shadow-md">
         <!-- Flex container to align both Shop and links horizontally -->
         <div class="flex items-center justify-between">
             <a href="#" class="text-4xl font-bold text-gray-900">Shop</a>
-            <div class="space-x-4 mr-4">
+            <div class="space-x-4 hidden md:flex">
                 <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Products</a>
+                <a href="/shop" class="text-gray-700 hover:text-gray-900">Products</a>
                 <a href="/cart" class="text-gray-700 hover:text-gray-900">Cart</a>
                 <a href="/myAccount" class="text-gray-700 hover:text-gray-900">My Account</a>
                 <a href="/orderslist" class="text-gray-700 hover:text-gray-900">My orders</a>
             </div>
-            <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
+            <a href="/logout" class="bg-blue-900 text-white items-center rounded-lg w-20 h-10 flex justify-center items-center hover:bg-red-700 transition duration-300">Logout</a>
+        </div>
+    </div>
+
+    <div class="mt-5 h-1 bg-slate-800 w-full"></div>
+
+    <!-- Main content -->
+    <div class="flex flex-col md:flex-row w-full p-5 items-center md:space-x-10">
+
+        <!-- Profile Image Section -->
+        <div class="w-full md:w-1/3 h-1/2 flex flex-col justify-center items-center mb-10 md:mb-0">
+            <div class="w-40 h-40 mb-5 rounded-full overflow-hidden bg-gray-300 flex justify-center items-center">
+                <img class="object-cover w-full h-full" src="" alt="profile image">
+            </div>
+            <form class="bg-green-600 text-yellow-400 font-semibold p-4 rounded-md w-full" action="/users/changeProfile" method="post" enctype="multipart/form-data">
+                <label for="picture" class="cursor-pointer">Change Profile</label>
+                <input type="file" id="picture" name="picture" class="hidden" required />
+                <button type="submit" class="mt-2 bg-white text-gray-600 px-4 py-2 rounded-md w-full">Upload</button>
+            </form>
         </div>
 
-        <div class="mt-5 h-1 bg-slate-800 w-full"></div>
-
-        <div class="flex flex-row w-full h-full items-center">
-
-            <div class="w-1/5 h-1/2 bg-black rounded-full flex justify-center items-center flex-shrink-0 mr-10">
-                <img class="w-full h-full rounded-full object-scale-down" src="https://plus.unsplash.com/premium_photo-1668896122605-debd3fed81a4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTZ8fGdpcmwlMjBwcm9maWxlfGVufDB8fDB8fHww" alt="profile image">
-            </div>
-
-            <div class=" w-full h-full border border-black ">
-                <h2 class="text-xl font-semibold">Name: abcds</h2>
-                <h2 class="text-xl font-semibold">Email: abcds</h2>
-                <h2 class="text-xl font-semibold">Contact: 0121312321312</h2>
-                <h2 class="text-xl font-semibold">Name: abcds</h2>
-            </div>
+        <!-- User Info Section -->
+        <div class="w-full md:w-2/3 flex flex-col items-start justify-start space-y-4">
+            <h2 class="text-xl font-semibold text-gray-900">Name: <%= user.fullName %></h2>
+            <h2 class="text-xl font-semibold text-gray-900">Email: <%= user.email %></h2>
+            <h2 class="text-xl font-semibold text-gray-900">Contact: <%= user.contact %></h2>
         </div>
+    </div>
+
 </body>
 </html>

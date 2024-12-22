@@ -4,48 +4,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registeration</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Typing animation */
+        .typing-effect {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid #fff; /* cursor effect */
+            animation: typing 3.5s steps(30) 1s 1 normal both, blink-caret .75s step-end infinite;
+        }
+
+        /* Define typing animation */
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Define blink animation for cursor */
+        @keyframes blink-caret {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* Apply background image with a blur */
+        body {
+            position: relative;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Create a pseudo-element to blur the background image */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: blur(8px); /* Adjust the blur intensity here */
+            z-index: -1;
+        }
+    </style>
 </head>
 
-<body>
-    <% if(error.length> 0){ %>
-        <div id="error-alert" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
-            <span class="inline-block mt-1 mb-1 text-white">
-                <%= error %>
-            </span>
+<body class="bg-zinc-900 font-sans">
+    <% if (error.length > 0) { %>
+        <div id="error-alert" class="fixed top-5 left-1/2 transform -translate-x-1/2 p-4 bg-red-500 text-white rounded-md shadow-md">
+            <span><%= error %></span>
         </div>
-        <%}%>
-            <div class="bg-zinc-900 w-full h-screen text-white">
-                <h1 class="font-bold text-3xl pt-10 px-6 mb-5">Welcome to Registeration</h1>
-                <form action="/users/register" method="post">
-                    <input type="text" placeholder="Ful Name" name="fullName"
-                        class="bg-transparent bg-zinc-700 ml-5 mr-1 rounded-lg w-34 h-10 p-2 outline-none" />
-                    <input type="text" placeholder="Email" name="email"
-                        class="bg-transparent bg-zinc-700 m-1 rounded-lg w-34 h-10 p-2 outline-none" />
-                    <input type="password" placeholder="Password" name="password"
-                        class="bg-transparent bg-zinc-700 m-1 rounded-lg w-34 h-10 p-2 outline-none" />
-                    <input type="number" placeholder="Contact No" name="contact"
-                        class="bg-transparent bg-zinc-700 m-1 rounded-lg w-34 h-10 p-2 outline-none" />
-                    <input type="submit" placeholder="Signup"
-                        class=" bg-blue-600 m-1 rounded-lg w-34 h-10 p-2 outline-none cursor-pointer" />
-                </form>
-                <h1 class=" pt-10 px-6">already have account ? :->
-                    <a class="ml-6 p-3 rounded-xl bg-zinc-700" href="/login">Login</a>
-                </h1>
+    <% } %>
 
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-zinc-800 p-8 rounded-xl shadow-lg w-full max-w-lg">
+            <!-- Typing animation applied to the heading -->
+            <h1 class="text-3xl font-bold mb-6 text-center typing-effect">Welcome to Registeration</h1>
+            <form action="/users/register" method="post" class="space-y-4">
+                <input
+                    type="text"
+                    placeholder="Full Name"
+                    name="fullName"
+                    class="w-full bg-zinc-700 text-white rounded-lg h-12 px-4 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                <input
+                    type="text"
+                    placeholder="Email"
+                    name="email"
+                    class="w-full bg-zinc-700 text-white rounded-lg h-12 px-4 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    class="w-full bg-zinc-700 text-white rounded-lg h-12 px-4 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                <input
+                    type="number"
+                    placeholder="Contact No"
+                    name="contact"
+                    class="w-full bg-zinc-700 text-white rounded-lg h-12 px-4 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                <button
+                    type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold h-12 rounded-lg transition duration-300"
+                >
+                    Signup
+                </button>
+            </form>
+            <div class="text-center mt-6">
+                <p class="mb-2">Already have an account?</p>
+                <a href="/login" class="inline-block bg-zinc-700 hover:bg-zinc-600 text-white py-2 px-4 rounded-lg transition duration-300">
+                    Login
+                </a>
             </div>
-</body>
-<script>
-    // Set timeout to hide the alerts after 2 seconds
-    setTimeout(() => {
-        const errorAlert = document.getElementById('error-alert');
+        </div>
+    </div>
 
-        if (errorAlert) {
-            errorAlert.classList.add('opacity-0'); // fade out
-            setTimeout(() => errorAlert.style.display = 'none', 500); // hide after transition
-        }
-    }, 2000); // Display duration (2 seconds)
-</script>
+    <script>
+        // Fade out error alert after 2 seconds
+        setTimeout(() => {
+            const errorAlert = document.getElementById('error-alert');
+            if (errorAlert) {
+                errorAlert.classList.add('opacity-0'); // fade out
+                setTimeout(() => errorAlert.style.display = 'none', 500); // hide after transition
+            }
+        }, 2000);
+    </script>
+</body>
 
 </html>

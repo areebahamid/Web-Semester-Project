@@ -9,89 +9,75 @@
 </head>
 
 <body class="bg-gray-100">
-    <% if(success.length> 0){ %>
-        <div id="success-alert"
-        class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-            <span class="inline-block mt-1 mb-1 text-white">
-                <%= success %>
-            </span>
-        </div>
-        <%}%>
+    <% if(success.length > 0){ %>
+    <div id="success-alert" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white font-medium px-4 py-2 rounded-md shadow-lg">
+        <%= success %>
+    </div>
+    <% } %>
+
     <!-- Navbar -->
-    <div class="w-full h-screen p-5">
-        <!-- Flex container to align both Shop and links horizontally -->
-        <div class="flex items-center justify-between">
-            <a href="#" class="text-4xl font-bold text-gray-900">Shop</a>
-            <div class="space-x-4 mr-4">
-                <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Products</a>
-                <a href="/cart" class="text-gray-700 hover:text-gray-900">Cart</a>
-                <a href="/myAccount" class="text-gray-700 hover:text-gray-900">My Account</a>
-                <a href="/orderslist" class="text-gray-700 hover:text-gray-900">My orders</a>
+    <div class="bg-white shadow-sm">
+        <div class="container mx-auto flex items-center justify-between p-5">
+            <a href="#" class="text-3xl font-bold text-gray-800">Drift Apparel</a>
+            <div class="space-x-6 hidden md:flex">
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Products</a>
+                <a href="/cart" class="text-gray-600 hover:text-gray-900 transition-colors">Cart</a>
+                <a href="/myAccount" class="text-gray-600 hover:text-gray-900 transition-colors">My Account</a>
+                <a href="/orderslist" class="text-gray-600 hover:text-gray-900 transition-colors">My Orders</a>
             </div>
-            <a href="/logout" class="bg-red-600 items-center rounded-lg w-16 h-10 p-2">logout</a>
-        </div>
-
-        <div class="mt-5 h-1 bg-slate-800 w-full"></div>
-
-        <div class="flex flex-row   mt-2 w-full min-h-screen bg-slate-300">
-            <div class="flex-[20%] flex flex-col  p-4">
-
-                <a class="mb-4 text-white" href="#">All products</a>
-                <!-- <a class="text-gray-950 " href="/newProduct">Create new products</a> -->
-            </div>
-            <br>
-            <div class="flex-[80%] flex flex-row space-x-3 flex-wrap gap-2 p-2" >
-                <% products.forEach((product)=>{ %>
-                    <div class=" w-60 h-72 rounded-md overflow-hidden transition-transform duration-300 ease-in-out  hover:scale-105 ">
-                        <img class="w-full h-52 object-center object-cover "
-                            src="data:image/jepg;base64,<%=product.image.toString('base64') %>"
-                            alt="<%= product.name %>" />
-
-                            <div
-                            class="bg-[<%= product.panelcolor %>] text-[<%= product.textcolor %>] w-full h-20 p-2 text-xl font-semibold tracking-tighter flex flex-col justify-start items-start">
-                            <div class="">
-                            <div class="text-2xl tracking-tighter flex flex-row items-center justify-between ">
-                              <ul class="mr-2"><%= product.name %></ul>
-                              <a class="cursor-pointer transition-transform hover:scale-110 shadow-xl" href="/addToCart/<%=product.id%>">
-                              <img class="h-8 w-8 rounded-md" src="https://cdn-icons-png.flaticon.com/512/5163/5163709.png" alt="Add to Cart">
-                              </a>
-                            </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                              <!-- Price -->
-                              <h3 class="text-2xl">$<%= product.price %></h3>
-                              
-                              <!-- Discount -->
-                              <% if (product.discount > 0) { %>
-                                <h3 class="text-red-500 text-xl line-through">$<%= (product.price - product.discount).toFixed(2) %></h3>
-                                <h3 class=" text-xl">$<%= product.discount %> off</h3>
-                              <% } %>
-                            </div>
-                          </div>
-                          
-                    </div>
-                    <% }) %>
-            </div>
+            <a href="/logout" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Logout</a>
         </div>
     </div>
+
+    <div class="border-t border-gray-200"></div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col md:flex-row mt-6 px-4 md:px-8">
+        <!-- Sidebar -->
+        <aside class="flex-[20%] bg-gray-200 p-4 rounded-lg shadow-md mb-6 md:mb-0 md:mr-6">
+            <a href="#" class="block text-gray-700 font-medium hover:text-gray-900 transition-colors py-2">All Products</a>
+            <a href="#" class="block text-gray-30 font-medium hover:text-gray-600 transition-colors py-2">Shoes</a>
+            <a href="#" class="block text-gray-30 font-medium hover:text-gray-600 transition-colors py-2">Shirt</a>
+            <a href="#" class="block text-gray-30 font-medium hover:text-gray-600 transition-colors py-2">Trouser</a>
+            <a href="#" class="block text-gray-30 font-medium hover:text-gray-600 transition-colors py-2">socks</a>
+            
+        
+        </aside>
+
+        <!-- Product List -->
+        <main class="flex-[80%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% products.forEach((product) => { %>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <img src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="<%= product.name %>" class="w-full h-52 object-cover" />
+                <div style="background-color: <%= product.panelcolor %>; color: <%= product.textcolor %>;" class="p-4">
+                    <h3 class="text-lg font-bold"><%= product.name %></h3>
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-xl font-semibold">$<%= product.price %></p>
+                        <% if (product.discount > 0) { %>
+                        <p class="text-red-500 line-through text-sm">$<%= (product.price - product.discount).toFixed(2) %></p>
+                        <% } %>
+                    </div>
+                    <% if (product.discount > 0) { %>
+                    <p class="text-sm text-green-500">Save $<%= product.discount %>!</p>
+                    <% } %>
+                    <a href="/addToCart/<%= product.id %>" class="block bg-blue-600 text-white text-center mt-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Add to Cart</a>
+                </div>
+            </div>
+            <% }) %>
+        </main>
+    </div>
+
+    <script>
+        // Hide the alert after 2 seconds
+        setTimeout(() => {
+            const successAlert = document.getElementById("success-alert");
+            if (successAlert) {
+                successAlert.classList.add("opacity-0"); // Fade out
+                setTimeout(() => successAlert.remove(), 500); // Remove after transition
+            }
+        }, 2000);
+    </script>
 </body>
-
-<script>
-    // Set timeout to hide the alerts after 2 seconds
-    setTimeout(() => {
-        const successAlert = document.getElementById("success-alert");
-        // const errorAlert = document.getElementById('error-alert');
-
-        if (successAlert) {
-            successAlert.classList.add("opacity-0"); // fade out
-            setTimeout(() => (successAlert.style.display = "none"), 500); // hide after transition
-        }
-        // if (errorAlert) {
-        //     errorAlert.classList.add('opacity-0'); // fade out
-        //     setTimeout(() => errorAlert.style.display = 'none', 500); // hide after transition
-        // }
-    }, 1000); // Display duration (2 seconds)
-</script>
 
 </html>
