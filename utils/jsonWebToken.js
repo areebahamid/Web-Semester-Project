@@ -1,3 +1,4 @@
+require("dotenv").config();
 var jwt = require('jsonwebtoken');
 
 const generateToken = (createdUser)=>{

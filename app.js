@@ -13,7 +13,7 @@ const usersRouter = require("./routes/usersRouter");
 const ordersRouter = require("./routes/ordersRouter");
 
 
-require("dotenv").config("/env");
+require("dotenv").config();
 
 app.use(flash());
 app.use(express.json());
