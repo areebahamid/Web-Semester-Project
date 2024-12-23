@@ -6,8 +6,8 @@ const bcrypt = require("bcrypt");
 
 //console.log(process.env.NODE_ENV);
 //command to set ENV  => set NODE_ENV=development
-if (process.env.NODE_ENV === "development") {
-  router.post("/create", async (req, res) => {
+
+router.post("/create", async (req, res) => {
     let owner = await ownerModel.find();
     if (owner.length > 0) {
       return res.status(503).send("Can not create new owner");
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "development") {
       });
     });
   });
-}
+
 
 router.get("/logout",logoutOwner);
 

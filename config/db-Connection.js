@@ -6,8 +6,13 @@ const debuger = require('debug')("development:mongoose");
 const config = require('config');
 
 
-mongoose.connect(`${config.get("MONGODB_URL")}/WebStore`)
-.then(()=>{ debuger("Connected") })
-.catch((err)=>{ debuger(err) });
+mongoose.connect(`${config.get("MONGODB_URL")}`)
+.then(()=>{ debuger("Connected") 
+    console.log("Database Connected")
+})
+.catch((err)=>{ debuger(err) 
+    console.log("not connected")
+    console.log(err)
+});
 
 module.exports = mongoose.connection;
