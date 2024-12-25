@@ -4,3 +4,4 @@ Step2: Added debuger,
 // debuger only consoles with specific command => set DEBUG=development:*
 // to stop debuger  run this=> set DEBUG=
 Added config lib
+use your own .env file
